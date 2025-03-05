@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
 :root {
+  /* Light mode colors */
   --background: #ffffff;
-  --foreground: #171717;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --card-bg: #f3f4f6;
+  --button-bg: #f3f4f6;
+  --button-text: #4b5563;
+  --button-hover-bg: #e5e7eb;
+  --link: #4b5563; /* Blackish grey for light mode (matches --text-secondary) */
+  --link-hover: #374151; /* Slightly darker grey for hover */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="dark"] {
+  /* Dark mode colors */
+  --background: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --card-bg: #1f2937;
+  --button-bg: #1f2937;
+  --button-text: #d1d5db;
+  --button-hover-bg: #374151;
+  --link: #d1d5db; /* Whitish grey for dark mode (matches --text-secondary) */
+  --link-hover: #e5e7eb; /* Slightly lighter grey for hover */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'SF Pro', sans-serif !important;
+  background-color: var(--background);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  @apply bg-[var(--background)] text-[var(--text-primary)];
+}
+
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/fonts/SF-Pro-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/fonts/SF-Pro-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/fonts/SF-Pro-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+/* Ensure the footer stays at the bottom */
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
 }

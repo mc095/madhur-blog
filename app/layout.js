@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
           <footer className="px-6 py-4 text-center text-[var(--text-muted)] flex items-center justify-center gap-2">
             <p>© 2025 Ganesh Vathumilli. All rights reserved.</p>
             <Link 
-              href="http://localhost:3000/admin/secret-blog-editor" 
+              href="https://ganesh-vathumilli.vercel.app/admin/secret-blog-editor" 
               className="text-[var(--text-secondary)] hover:underline text-sm"
             >
             (Admin)

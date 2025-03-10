@@ -5,8 +5,8 @@ import { ThemeProvider } from './context/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
 
 export const metadata = {
-  title: 'Madhur Achanta',
-  description: 'Made with love from Ganesh 💖',
+  title: 'Ganesh Vathumilli',
+  description: 'My Personal Space for Blogs',
 };
 
 export default function RootLayout({ children }) {
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
           </div>
           <header className="pt-16 pb-8 px-6">
             <div className="max-w-3xl mx-auto text-left">
-              <h1 className="text-4xl font-bold">Madhur Achanta</h1>
+              <h1 className="text-4xl font-bold">Ganesh Vathumilli</h1>
               <p className="mt-2 text-lg text-[var(--text-secondary)]">
                 My space for thoughts, ideas, and stories.
               </p>
@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
           </header>
           <main className="px-6 py-8 flex-1">{children}</main>
           <footer className="px-6 py-4 text-center text-[var(--text-muted)] flex items-center justify-center">
-            <p>© 2025 Madhur Achanta. All rights reserved.</p>
+            <p>© 2025 Ganesh Vathumilli. All rights reserved.</p>
             <ThemeToggle />
           </footer>
         </ThemeProvider>

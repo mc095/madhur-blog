@@ -49,13 +49,13 @@ export default function HomePage() {
         <h2 className="text-2xl mb-10 text-[var(--text-primary)]">Connect</h2>
         <p className="text-base text-[var(--text-muted)] mb-4">
           Feel free to contact me at{' '}
-          <a href="mailto:madhurachanta2005@gmail.com" className="text-[var(--link)] hover:text-[var(--link-hover)]">
-            madhurachanta2005@gmail.com
+          <a href="mailto:ganeshvathumilli@gmail.com" className="text-[var(--link)] hover:text-[var(--link-hover)]">
+            ganeshvathumilli@gmail.com
           </a>
         </p>
         <div className="flex flex-wrap gap-3">
           <a
-            href="https://github.com/yourusername"
+            href="https://github.com/mc095"
             target="_blank"
             rel="noopener noreferrer"
             className="px-3 py-1.5 bg-[var(--button-bg)] text-[var(--button-text)] text-sm rounded-full hover:bg-[var(--button-hover-bg)] transition-colors"
@@ -63,20 +63,12 @@ export default function HomePage() {
             GitHub →
           </a>
           <a
-            href="https://linkedin.com/in/yourusername"
+            href="https://www.linkedin.com/in/ganesh097/"
             target="_blank"
             rel="noopener noreferrer"
             className="px-3 py-1.5 bg-[var(--button-bg)] text-[var(--button-text)] text-sm rounded-full hover:bg-[var(--button-hover-bg)] transition-colors"
           >
             LinkedIn →
-          </a>
-          <a
-            href="https://instagram.com/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-3 py-1.5 bg-[var(--button-bg)] text-[var(--button-text)] text-sm rounded-full hover:bg-[var(--button-hover-bg)] transition-colors"
-          >
-            Instagram →
           </a>
         </div>
       </div>

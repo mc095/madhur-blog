@@ -2,30 +2,30 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { evaluate } from '@mdx-js/mdx';
 import { MDXProvider } from '@mdx-js/react';
 import * as runtime from 'react/jsx-runtime';
 import { useTheme } from '../../context/ThemeContext';
 
-// Utility function to slugify text for heading IDs
 function slugify(str) {
   return str
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters except for -
-    .replace(/\-\-+/g, '-'); // Replace multiple - with single -
+    .replace(/\s+/g, '-') 
+    .replace(/&/g, '-and-') 
+    .replace(/[^\w\-]+/g, '') 
+    .replace(/\-\-+/g, '-'); 
 }
 
-// Custom Heading component with anchor link and level-based styling
+
 function createHeading(level) {
   const CustomHeading = ({ children, ...props }) => {
     const slug = slugify(children);
-    const Tag = `h${level}`; // Dynamically create the heading tag (h1, h2, etc.)
+    const Tag = `h${level}`; 
 
-    // Define font sizes based on heading level
+
     const fontSizeClass = {
       1: 'text-3xl md:text-4xl',
       2: 'text-2xl md:text-3xl',
@@ -54,7 +54,7 @@ function createHeading(level) {
   return CustomHeading;
 }
 
-// Custom Paragraph component
+
 function createParagraph({ children, ...props }) {
   return (
     <p
@@ -66,13 +66,17 @@ function createParagraph({ children, ...props }) {
   );
 }
 
-// Custom Link component
+
 function CustomLink({ href, children, ...props }) {
   if (href.startsWith('/')) {
     return (
-      <a href={href} className="text-[var(--link)] hover:text-[var(--link-hover)] underline transition-colors" {...props}>
+      <Link 
+        href={href} 
+        className="text-[var(--link)] hover:text-[var(--link-hover)] underline transition-colors"
+        {...props}
+      >
         {children}
-      </a>
+      </Link>
     );
   }
 
@@ -97,7 +101,6 @@ function CustomLink({ href, children, ...props }) {
   );
 }
 
-// Custom Image component
 function createImage({ alt, src, ...props }) {
   if (!src) {
     console.error("Image requires a valid 'src' property.");
@@ -119,7 +122,7 @@ function createImage({ alt, src, ...props }) {
   );
 }
 
-// Custom List components
+
 function createUnorderedList({ children, ...props }) {
   return (
     <ul className="list-disc pl-6 mb-8" {...props}>
@@ -136,7 +139,7 @@ function createListItem({ children, ...props }) {
   );
 }
 
-// Custom components for MDX rendering
+
 const components = {
   h1: createHeading(1),
   h2: createHeading(2),
@@ -155,22 +158,34 @@ export default function BlogPostClient({ postData }) {
   const { data, content } = postData;
   const [MDXContent, setMDXContent] = useState(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const articleRef = useRef(null);
 
   useEffect(() => {
     const loadMDX = async () => {
       try {
+        setLoading(true);
         const { default: Component } = await evaluate(content, {
           ...runtime,
           useMDXComponents: () => components,
         });
         setMDXContent(() => Component);
+        setError(null);
       } catch (error) {
         console.error('Error evaluating MDX:', error);
+        setError('Failed to load content. Please try again.');
+      } finally {
+        setLoading(false);
       }
     };
 
-    loadMDX();
+    if (content) {
+      loadMDX();
+    } else {
+      setError('No content available for this post.');
+      setLoading(false);
+    }
   }, [content]);
 
   useEffect(() => {
@@ -191,10 +206,21 @@ export default function BlogPostClient({ postData }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (!MDXContent) {
+  if (loading) {
     return (
-      <div className="max-w-3xl mx-auto">
-        <p>Loading...</p>
+      <div className="max-w-3xl mx-auto py-8 px-4">
+        <p className="text-[var(--text-secondary)]">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-3xl mx-auto py-8 px-4">
+        <p className="text-[var(--text-error)]">{error}</p>
+        <Link href="/blog" className="text-[var(--link)] hover:text-[var(--link-hover)] mt-4 inline-block">
+          ← Back to blog
+        </Link>
       </div>
     );
   }
@@ -226,9 +252,14 @@ export default function BlogPostClient({ postData }) {
             {data.excerpt || 'No description available.'}
           </p>
           <MDXProvider components={components}>
-            <MDXContent />
+            {MDXContent && <MDXContent />}
           </MDXProvider>
         </article>
+        <div className="mt-12 mb-8">
+          <Link href="/blog" className="text-[var(--link)] hover:text-[var(--link-hover)] hover:underline">
+            ← Back to blog
+          </Link>
+        </div>
       </div>
     </>
   );
